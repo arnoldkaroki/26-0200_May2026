@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QuickBite Food Delivery</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+<h1>🍔 QuickBite Food Delivery 🍕</h1>
+<p><em>Fresh meals delivered fast to your doorstep</em></p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#products">Menu</a>
+<a href="#gallery">Gallery</a>
+<a href="#contact">Contact</a>
+<button onclick="openModal('signup-modal')">🍔 Sign Up</button>
+<button onclick="openModal('promo-modal')">🎁 View Offers</button>
+</nav>
+
+<div class="modal-overlay" id="welcome-modal">
+<div class="modal-box">
+<button class="modal-close" onclick="closeModal('welcome-modal')">×</button>
+<h2>🍔 Welcome to QuickBite Food Delivery!</h2>
+<p>Karibu! We are delighted to have you visit our online food delivery service.</p>
+<p>Enjoy fresh burgers, pizza, fried chicken, desserts, and beverages delivered directly to your doorstep across Nairobi.</p>
+<p style="text-align:center;">
+<button class="modal-close" onclick="closeModal('welcome-modal')" style="position:relative;top:auto;right:auto;width:auto;height:auto;padding:12px 30px;border-radius:25px;margin-top:10px;">Start Ordering 🛒</button>
+</p>
+</div>
+</div>
+
+<div class="modal-overlay" id="promo-modal">
+<div class="modal-box">
+<button class="modal-close" onclick="closeModal('promo-modal')">×</button>
+<h2>🎁 QuickBite Special Offers!</h2>
+<p>Limited-time discounts on our favourite meals:</p>
+<div class="promo-deals">
+<h3>🍔 This Week's Deals</h3>
+<ul>
+<li>Classic Burger — <span class="discount">20% OFF</span></li>
+<li>Chicken Pizza — <span class="discount">15% OFF</span></li>
+<li>Family Chicken Bucket — <span class="discount">25% OFF</span></li>
+<li>Chocolate Cake — <span class="discount">10% OFF</span></li>
+<li>Free Delivery on orders above <strong>KES 3000</strong></li>
+</ul>
+</div>
+<p style="margin-top:15px;text-align:center;font-style:italic;color:#2BB673;">Use code <strong>QUICK20</strong> at checkout!</p>
+<p style="text-align:center;">
+<button onclick="closeModal('promo-modal');openModal('signup-modal')" style="background:linear-gradient(135deg,#0B3B2E,#34D186);color:white;border:none;padding:12px 30px;border-radius:25px;cursor:pointer;font-size:1em;font-weight:bold;">Sign Up To Order 🍔</button>
+</p>
+</div>
+</div>
+
+<div class="modal-overlay" id="signup-modal">
+<div class="modal-box">
+<button class="modal-close" onclick="closeModal('signup-modal')">×</button>
+<h2>🍔 Create Your QuickBite Account</h2>
+<p>Join QuickBite and receive exclusive food offers!</p>
+
+<form class="signup-form" id="signup-form" novalidate>
+
+<div class="form-group">
+<label for="signup-name">Full Name *</label>
+<input type="text" id="signup-name" placeholder="e.g. Arnold Karoki">
+<span class="error-msg" id="signup-name-error"></span>
+</div>
+
+<div class="form-group">
+<label for="signup-email">Email Address *</label>
+<input type="email" id="signup-email" placeholder="e.g. stacey20@gmail.com">
+<span class="error-msg" id="signup-email-error"></span>
+</div>
+
+<div class="form-group">
+<label for="signup-phone">Phone Number *</label>
+<input type="tel" id="signup-phone" placeholder="e.g. 0712345678">
+<span class="error-msg" id="signup-phone-error"></span>
+</div>
+
+<div class="form-group">
+<label for="signup-gender">Gender *</label>
+<select id="signup-gender">
+<option value="">-- Select Gender --</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+<option value="other">Other</option>
+</select>
+<span class="error-msg" id="signup-gender-error"></span>
+</div>
+
+<button type="submit">Create Account 🍔</button>
+<div class="success-msg" id="signup-success"></div>
+
+</form>
+</div>
+</div>
+<section id="home">
+
+<h1>Welcome to QuickBite Food Delivery</h1>
+
+<p>Welcome to QuickBite, Nairobi's trusted online food delivery service. We prepare fresh meals daily and deliver delicious food directly to your home, office, or event.</p>
+
+<hr>
+
+<h2>Our Popular Meals</h2>
+
+<div class="image-grid">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" alt="Burger">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400" alt="Pizza">
+<img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400" alt="Chicken">
+<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" alt="Salad">
+</div>
+
+<hr>
+
+<h2>Why Choose QuickBite?</h2>
+
+<ul class="bloom-list">
+<li data-flower="🍔">Fresh meals prepared daily</li>
+<li data-flower="🚚">Fast delivery across Nairobi</li>
+<li data-flower="🍕">Wide variety of meals</li>
+<li data-flower="💳">Secure payment options</li>
+<li data-flower="⭐">Quality customer service</li>
+</ul>
+
+<h2>How To Order</h2>
+
+<ol class="garden-path">
+<li>Browse our food menu</li>
+<li>Choose your favourite meal</li>
+<li>Add delivery details</li>
+<li>Confirm payment</li>
+<li>Receive your food</li>
+</ol>
+
+<hr>
+
+<h2>Featured Meals & Prices</h2>
+
+<table>
+<caption>QuickBite Menu Prices (KES)</caption>
+<thead>
+<tr>
+<th>Meal</th>
+<th>Category</th>
+<th>Price</th>
+<th>Delivery</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Classic Burger</td>
+<td>Fast Food</td>
+<td>650</td>
+<td>Same Day</td>
+</tr>
+
+<tr>
+<td>Chicken Pizza</td>
+<td>Pizza</td>
+<td>1200</td>
+<td>Same Day</td>
+</tr>
+
+<tr>
+<td>Fried Chicken Bucket</td>
+<td>Chicken</td>
+<td>1500</td>
+<td>Same Day</td>
+</tr>
+
+<tr>
+<td>Chocolate Cake</td>
+<td>Dessert</td>
+<td>450</td>
+<td>Next Day</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+
+
+<section id="about">
+
+<h1>About QuickBite</h1>
+
+<img class="about-image" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400" alt="Restaurant">
+
+<p>QuickBite Food Delivery started with a mission to make quality meals accessible to everyone in Nairobi.</p>
+
+<p>Our chefs prepare delicious meals using fresh ingredients while our delivery team ensures your order reaches you quickly and safely.</p>
+
+<hr>
+
+<h2>What We Offer</h2>
+
+<ul>
+
+<li>Fast Food
+<ul>
+<li>Burgers</li>
+<li>Pizza</li>
+<li>Fried Chicken</li>
+</ul>
+</li>
+
+<li>Healthy Meals
+<ul>
+<li>Fresh Salads</li>
+<li>Fruit Bowls</li>
+<li>Healthy Drinks</li>
+</ul>
+</li>
+
+<li>Desserts
+<ul>
+<li>Cakes</li>
+<li>Ice Cream</li>
+<li>Pastries</li>
+</ul>
+</li>
+
+<li>Services
+<ul>
+<li>Home Delivery</li>
+<li>Event Catering</li>
+<li>Online Ordering</li>
+</ul>
+</li>
+
+</ul>
+
+<hr>
+
+<h2>Find Us In Nairobi</h2>
+
+<div class="map-wrap">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.35096055823!2d36.70730744863281!3d-1.3032035000000113" loading="lazy" title="QuickBite Location"></iframe>
+</div>
+
+</section>
+<section id="products">
+
+<h1>Our Food Menu</h1>
+
+<p>Explore our delicious selection of freshly prepared meals, snacks, desserts and beverages.</p>
+
+<div class="image-grid image-grid-3">
+
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300" alt="Burger">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300" alt="Pizza">
+<img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=300" alt="Fried Chicken">
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300" alt="Dessert">
+<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300" alt="Healthy Food">
+<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=300" alt="Meals">
+
+</div>
+
+<hr>
+
+<h2>Full Food Catalogue</h2>
+
+<table>
+
+<caption>QuickBite Food Catalogue (KES)</caption>
+
+<thead>
+<tr>
+<th>Food</th>
+<th>Category</th>
+<th>Price</th>
+<th>Availability</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Classic Burger</td>
+<td>Fast Food</td>
+<td>650</td>
+<td>Available</td>
+</tr>
+
+<tr>
+<td>Chicken Pizza</td>
+<td>Pizza</td>
+<td>1200</td>
+<td>Available</td>
+</tr>
+
+<tr>
+<td>Fried Chicken</td>
+<td>Main Meal</td>
+<td>800</td>
+<td>Available</td>
+</tr>
+
+<tr>
+<td>Fresh Salad</td>
+<td>Healthy Meal</td>
+<td>500</td>
+<td>Available</td>
+</tr>
+
+<tr>
+<td>Chocolate Cake</td>
+<td>Dessert</td>
+<td>450</td>
+<td>Limited</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<hr>
+
+<h2>Best Sellers</h2>
+
+<ul>
+<li>Classic Cheese Burger</li>
+<li>Chicken Supreme Pizza</li>
+<li>Family Chicken Bucket</li>
+<li>Chocolate Cake</li>
+</ul>
+
+<h2>Food Preparation Steps</h2>
+
+<ol class="garden-path">
+<li>Choose your favourite meal</li>
+<li>Kitchen prepares your order</li>
+<li>Food is packaged safely</li>
+<li>Delivery rider collects order</li>
+<li>Meal arrives at your location</li>
+</ol>
+
+</section>
+
+
+<section id="gallery">
+
+<h1>QuickBite Gallery</h1>
+
+<p>View some of our delicious meals and food experiences.</p>
+
+<hr>
+
+<h2>Food Photos</h2>
+
+<div class="gallery-grid">
+
+<div class="gallery-card">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=220" alt="Burger">
+<em>Fresh Burgers</em>
+</div>
+
+<div class="gallery-card">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=220" alt="Pizza">
+<em>Hot Pizza</em>
+</div>
+
+<div class="gallery-card">
+<img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=220" alt="Chicken">
+<em>Crispy Chicken</em>
+</div>
+
+<div class="gallery-card">
+<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=220" alt="Salad">
+<em>Healthy Meals</em>
+</div>
+
+<div class="gallery-card">
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=220" alt="Cake">
+<em>Sweet Desserts</em>
+</div>
+
+<div class="gallery-card">
+<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=220" alt="Food">
+<em>Chef Specials</em>
+</div>
+
+</div>
+
+<hr>
+
+<h2>Food Delivery Videos</h2>
+
+<div class="media-grid">
+
+<div class="media-card">
+
+<strong>🎬 QuickBite Delivery Process</strong>
+
+<iframe src="https://www.youtube.com/embed/rd5aFXTJXHY" title="Food Delivery" allowfullscreen></iframe>
+
+</div>
+
+
+<div class="media-card">
+
+<strong>🎬 Restaurant Experience</strong>
+
+<iframe src="https://www.youtube.com/embed/KDhX9c5QfJc" title="Restaurant" allowfullscreen></iframe>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<h2>Listen & Watch</h2>
+
+<div class="media-grid">
+
+<div class="media-card">
+
+<strong>🎵 QuickBite Restaurant Ambience</strong>
+
+<audio controls>
+
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" type="audio/mpeg">
+
+Your browser does not support audio.
+
+</audio>
+
+</div>
+
+
+<div class="media-card">
+
+<strong>🎬 How QuickBite Delivery Works</strong>
+
+<video controls>
+
+<source src="https://www.shutterstock.com/shutterstock/videos/3468714949/preview/stock-footage-free-delivery-and-express-shipping-vehicle-vector-animation-k-stock-video-for-editing-element.mp4" type="video/mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+</div>
+
+</section>
+<section id="contact">
+
+<h1>Contact QuickBite</h1>
+
+<p>We would love to hear from you! Contact us for orders, enquiries and delivery support.</p>
+
+<hr>
+
+<h2>Get In Touch</h2>
+
+<table>
+
+<caption>QuickBite Contact Details</caption>
+
+<thead>
+<tr>
+<th>Department</th>
+<th>Contact Person</th>
+<th>Phone</th>
+<th>Email</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Orders</td>
+<td>Amina</td>
+<td>0712 345 678</td>
+<td>orders@quickbite.co.ke</td>
+</tr>
+
+<tr>
+<td>Customer Care</td>
+<td>David</td>
+<td>0723 456 789</td>
+<td>support@quickbite.co.ke</td>
+</tr>
+
+<tr>
+<td>Deliveries</td>
+<td>Grace</td>
+<td>0734 567 890</td>
+<td>delivery@quickbite.co.ke</td>
+</tr>
+
+<tr>
+<td>Catering</td>
+<td>Michael</td>
+<td>0745 678 901</td>
+<td>catering@quickbite.co.ke</td>
+</tr>
+
+<tr>
+<td>General Enquiries</td>
+<td>Front Desk</td>
+<td>0756 789 012</td>
+<td>info@quickbite.co.ke</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<hr>
+
+
+<h2>Opening Hours</h2>
+
+<ul class="bloom-list">
+
+<li data-flower="🌅">Monday - Friday: 8:00 AM - 7:00 PM</li>
+
+<li data-flower="🍔">Saturday: 9:00 AM - 6:00 PM</li>
+
+<li data-flower="🚚">Sunday: 10:00 AM - 4:00 PM</li>
+
+<li data-flower="🎉">Public Holidays: 10:00 AM - 2:00 PM</li>
+
+</ul>
+
+
+<hr>
+
+
+<h2>Visit Our Kitchen</h2>
+
+<div class="map-wrap">
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.35096055823!2d36.70730744863281!3d-1.3032035000000113" allowfullscreen="" loading="lazy" title="QuickBite Nairobi Location"></iframe>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+&copy; 2026 QuickBite Food Delivery, Nairobi Kenya. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
