@@ -1,170 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>QuickBite Food Delivery</title>
 
-    <style>
-body{
-    background:linear-gradient(to right,#34D186,#2BB673,#0B3B2E);
-    color:#222;
-    font-family:Arial,sans-serif;
-    margin:0;
-}
-
-header{
-    text-align:center;
-    background:linear-gradient(to right,#34D186,#2BB673);
-    color:white;
-    padding:25px;
-}
-
-nav{
-    background-color:#ffffff;
-    padding:15px;
-    text-align:center;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
-nav ul{
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    list-style:none;
-    margin:0;
-    padding:0;
-}
-
-nav li{
-    display:inline-block;
-    margin:0 15px;
-}
-
-nav a{
-    color:#2BB673;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-nav a:hover{
-    color:#0B3B2E;
-}
-
-section{
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-h1,h2,h3{
-    color:#0B3B2E;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    color:black;
-}
-
-caption{
-    font-size:24px;
-    font-weight:bold;
-    padding:15px;
-    background:#0B3B2E;
-    color:white;
-}
-
-th{
-    background:#34D186;
-    color:white;
-    padding:15px;
-}
-
-td{
-    padding:12px;
-    text-align:center;
-}
-
-tr:nth-child(even){
-    background:#d9f7e8;
-}
-
-tr:nth-child(odd){
-    background:#f5fff8;
-}
-.media-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    grid-template-rows:repeat(2,250px);
-    gap:20px;
-}
-
-.media-grid img,
-.media-grid iframe,
-.media-grid video{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:12px;
-}
-
-.media-grid img:hover{
-    transform:scale(1.03);
-}
-
-iframe,
-video{
-    width:100%;
-    max-width:900px;
-    border-radius:12px;
-    border:none;
-}
-
-audio{
-    width:100%;
-    max-width:600px;
-}
-
-button{
-    background:#34D186;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-button:hover{
-    background:#2BB673;
-}
-
-a{
-    color:#2BB673;
-}
-
-a:hover{
-    color:#0B3B2E;
-}
-
-footer{
-    background:#0B3B2E;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:20px;
-}
-
-hr{
-    border:none;
-    height:1px;
-    background:#ddd;
-}
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -179,187 +22,271 @@ hr{
             <li><a href="#products">Menu</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#product-table">Prices</a></li>
+            <li><a href="#register">Register</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
+
 </header>
 
+
 <section id="home">
-    <h2>Welcome to QuickBite Food Delivery</h2>
-    <p>
-        We provide fresh, delicious, and affordable meals delivered
-        directly to your doorstep. Enjoy burgers, pizza, fried chicken,
-        salads, desserts, and beverages prepared with quality ingredients.
-    </p>
+
+<h2>Welcome to QuickBite Food Delivery</h2>
+
+<p>
+We provide fresh, delicious, and affordable meals delivered
+directly to your doorstep. Enjoy burgers, pizza, fried chicken,
+salads, desserts, and beverages prepared with quality ingredients.
+</p>
+
 </section>
+
+
 
 <section id="purpose">
-    <h2>Purpose of the Website</h2>
-    <p>
-        The purpose of this website is to showcase our food menu,
-        provide information about our delivery services, and help
-        customers conveniently order meals online.
-    </p>
+
+<h2>Purpose of the Website</h2>
+
+<p>
+The purpose of this website is to showcase our food menu,
+provide information about our delivery services, and help
+customers conveniently order meals online.
+</p>
+
 </section>
+
+
 
 <section id="products">
-    <h2>Featured Meals</h2>
 
-    <article>
-        <h3>Burgers</h3>
-        <p>Juicy burgers served with crispy fries.</p>
-    </article>
+<h2>Featured Meals</h2>
 
-    <article>
-        <h3>Pizza</h3>
-        <p>Freshly baked pizzas with delicious toppings.</p>
-    </article>
+<article>
+<h3>Burgers</h3>
+<p>Juicy burgers served with crispy fries.</p>
+</article>
 
-    <article>
-        <h3>Fried Chicken</h3>
-        <p>Crispy chicken prepared using our special recipe.</p>
-    </article>
+
+<article>
+<h3>Pizza</h3>
+<p>Freshly baked pizzas with delicious toppings.</p>
+</article>
+
+
+<article>
+<h3>Fried Chicken</h3>
+<p>Crispy chicken prepared using our special recipe.</p>
+</article>
+
+
 </section>
+
+
+
 
 <section id="gallery">
-    <h2>Food Gallery</h2>
 
-    <div class="media-grid">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="Burger">
+<h2>Food Gallery</h2>
 
-        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" alt="Pizza">
 
-        <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500" alt="Fried Chicken">
+<div class="media-grid">
 
-        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" alt="Salad">
 
-        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500" alt="Drinks">
-    </div>
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="Burger">
+
+
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" alt="Pizza">
+
+
+<img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500" alt="Chicken">
+
+
+<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" alt="Salad">
+
+
+</div>
+
 </section>
 
-<section id="lists">
-    <h2>Our Food Products and Services</h2>
 
-    <h3>Ordering Procedure</h3>
-    <ol>
-        <li>Browse the food menu.</li>
-        <li>Select your preferred meal.</li>
-        <li>Add items to your order.</li>
-        <li>Enter delivery details.</li>
-        <li>Complete payment.</li>
-        <li>Receive your food delivery.</li>
-    </ol>
 
-    <h3>Services We Offer</h3>
-    <ul>
-        <li>Food Delivery</li>
-        <li>Online Ordering</li>
-        <li>Event Catering</li>
-        <li>Meal Reservations</li>
-        <li>Customer Support</li>
-    </ul>
-</section>
+
 
 <section id="product-table">
-    <h2>Available Food Items</h2>
 
-    <table>
-        <caption><strong>QuickBite Food Menu</strong></caption>
+<h2>Available Food Items</h2>
 
-        <tr>
-            <th>Food ID</th>
-            <th>Food Name</th>
-            <th>Category</th>
-            <th>Price (KES)</th>
-            <th>Availability</th>
-        </tr>
 
-        <tr>
-            <td>F001</td>
-            <td>Classic Burger</td>
-            <td>Main Meal</td>
-            <td>650</td>
-            <td>Available</td>
-        </tr>
+<table>
 
-        <tr>
-            <td>F002</td>
-            <td>Chicken Pizza</td>
-            <td>Pizza</td>
-            <td>1200</td>
-            <td>Available</td>
-        </tr>
+<caption>QuickBite Food Menu</caption>
 
-        <tr>
-            <td>F003</td>
-            <td>Fried Chicken</td>
-            <td>Main Meal</td>
-            <td>800</td>
-            <td>Available</td>
-        </tr>
 
-        <tr>
-            <td>F004</td>
-            <td>Fresh Salad</td>
-            <td>Healthy Meal</td>
-            <td>500</td>
-            <td>Available</td>
-        </tr>
+<tr>
 
-        <tr>
-            <td>F005</td>
-            <td>Chocolate Cake</td>
-            <td>Dessert</td>
-            <td>450</td>
-            <td>Limited Stock</td>
-        </tr>
-    </table>
+<th>ID</th>
+<th>Food Name</th>
+<th>Category</th>
+<th>Price(KES)</th>
+
+</tr>
+
+
+<tr>
+<td>F001</td>
+<td>Classic Burger</td>
+<td>Main Meal</td>
+<td>650</td>
+</tr>
+
+
+<tr>
+<td>F002</td>
+<td>Chicken Pizza</td>
+<td>Pizza</td>
+<td>1200</td>
+</tr>
+
+
+<tr>
+<td>F003</td>
+<td>Fried Chicken</td>
+<td>Main Meal</td>
+<td>800</td>
+</tr>
+
+
+</table>
+
 </section>
+
+
+
+
+
+<section id="register">
+
+
+<h2>Customer Registration</h2>
+
+
+<form id="userForm">
+
+
+<label>Name:</label>
+
+<input type="text" id="name" placeholder="Enter your name">
+
+
+
+<label>Email:</label>
+
+<input type="email" id="email" placeholder="example@gmail.com">
+
+
+
+<label>Phone Number:</label>
+
+<input type="text" id="phone" placeholder="+254700000000">
+
+
+
+<label>Gender:</label>
+
+<select id="gender">
+
+<option value="">Select Gender</option>
+
+<option>Male</option>
+
+<option>Female</option>
+
+</select>
+
+
+
+<button type="submit">
+Register
+</button>
+
+
+</form>
+
+
+</section>
+
+
+
+
 
 <section>
-    <h2>Restaurant Ambience Music</h2>
 
-    <audio controls>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" type="audio/mpeg">
-    </audio>
-</section>
-<section>
-    <h2>Food Delivery Service Video</h2>
+<h2>Restaurant Ambience Music</h2>
 
-    <video controls>
-        <source src="https://www.shutterstock.com/shutterstock/videos/3468714949/preview/stock-footage-free-delivery-and-express-shipping-vehicle-vector-animation-k-stock-video-for-editing-element.mp4" type="video/mp4">
-        Your browser does not support video.
-    </video>
-</section>
-<section>
-    <h2>How Food Delivery Works</h2>
 
-    <iframe
-        height="450"
-        src="https://www.youtube.com/embed/rd5aFXTJXHY"
-        title="Food Delivery Service"
-        allowfullscreen>
-    </iframe>
+<audio controls>
+
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3">
+
+</audio>
+
+
 </section>
+
+
+
+
 
 <section>
-    <h2>Visit Our Partner</h2>
 
-    <a href="https://www.ubereats.com" target="_blank">
-        Visit Uber Eats
-    </a>
+
+<h2>How Food Delivery Works</h2>
+
+
+<iframe
+height="450"
+src="https://www.youtube.com/embed/rd5aFXTJXHY"
+allowfullscreen>
+</iframe>
+
+
 </section>
+
+
+
+
 
 <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: info@quickbitefooddelivery.com</p>
-    <p>Phone: +254 700 987 654</p>
-    <p>Location: Nairobi, Kenya</p>
+
+<h2>Contact Us</h2>
+
+<p>Email: info@quickbitefooddelivery.com</p>
+
+<p>Phone: +254700987654</p>
+
+<p>Location: Nairobi, Kenya</p>
+
+
 </section>
 
+
+
+
 <footer>
-    <p>&copy; 2026 QuickBite Food Delivery. All Rights Reserved.</p>
+
+<p>
+© 2026 QuickBite Food Delivery. All Rights Reserved.
+</p>
+
+
 </footer>
+
+
+
+
+<script src="script.js"></script>
+
 
 </body>
 </html>
