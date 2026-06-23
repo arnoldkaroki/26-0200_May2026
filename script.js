@@ -267,7 +267,7 @@ else if(!isValidEmail(email.value.trim())){
 
 showError(
 "signup-email",
-"Enter a valid email e.g. stacey20@gmail.com"
+"Enter a valid email e.g. arnold420@gmail.com"
 );
 
 }
@@ -342,7 +342,7 @@ if(!isValidEmail(email)){
 
 showError(
 "signup-email",
-"Enter a valid email e.g. stacey20@gmail.com"
+"Enter a valid email e.g. arnold@gmail.com"
 );
 
 
