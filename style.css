@@ -1,0 +1,275 @@
+body{
+    background:linear-gradient(to right,#34D186,#2BB673,#0B3B2E);
+    color:#222;
+    font-family:Arial,sans-serif;
+    margin:0;
+}
+
+
+header{
+    text-align:center;
+    background:linear-gradient(to right,#34D186,#2BB673);
+    color:white;
+    padding:25px;
+}
+
+
+nav{
+    background:white;
+    padding:15px;
+    margin-top:20px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+nav ul{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+
+nav a{
+    color:#2BB673;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+
+nav a:hover{
+    color:#0B3B2E;
+}
+
+
+
+section{
+
+    background:white;
+
+    margin:20px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+}
+
+
+
+h1,h2,h3{
+
+    color:#0B3B2E;
+
+}
+
+
+
+
+.media-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.media-grid img{
+
+    width:100%;
+
+    height:250px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+}
+
+
+
+.media-grid img:hover{
+
+    transform:scale(1.03);
+
+}
+
+
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+caption{
+
+    background:#0B3B2E;
+
+    color:white;
+
+    padding:15px;
+
+    font-size:22px;
+
+}
+
+
+
+th{
+
+    background:#34D186;
+
+    color:white;
+
+    padding:15px;
+
+}
+
+
+
+td{
+
+    padding:12px;
+
+    text-align:center;
+
+}
+
+
+
+tr:nth-child(even){
+
+    background:#d9f7e8;
+
+}
+
+
+tr:nth-child(odd){
+
+    background:#f5fff8;
+
+}
+
+
+
+
+form{
+
+    width:400px;
+
+    max-width:100%;
+
+}
+
+
+
+label{
+
+    display:block;
+
+    margin-top:15px;
+
+    font-weight:bold;
+
+}
+
+
+
+input,select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:5px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+}
+
+
+
+button{
+
+    margin-top:20px;
+
+    background:#34D186;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 25px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+
+
+button:hover{
+
+    background:#2BB673;
+
+}
+
+
+
+iframe,video{
+
+    width:100%;
+
+    max-width:900px;
+
+    border-radius:12px;
+
+    border:none;
+
+}
+
+
+
+audio{
+
+    width:100%;
+
+    max-width:600px;
+
+}
+
+
+
+
+footer{
+
+    background:#0B3B2E;
+
+    color:white;
+
+    text-align:center;
+
+    padding:20px;
+
+    margin-top:20px;
+
+}
