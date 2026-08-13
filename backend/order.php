@@ -1,203 +1,714 @@
 <?php
 /**
+ * ============================================================
+ * QUICKBITE DELIVERY
  * POST /backend/order.php
+ * ============================================================
  *
- * Places an order. The browser sends only product IDs + quantities (plus
- * customer/delivery details and an optional promo code) — NEVER prices.
- * All prices, the discount and the delivery fee are looked up / computed
- * here from the database, so the total can't be tampered with client-side.
+ * Creates a new food order.
  *
- * Request JSON:
- *   {
- *     "customer": { "name", "email", "phone", "address", "delivery_time" },
- *     "items":    [ { "id": 7, "quantity": 2 }, ... ],
- *     "promo_code": "BLOOM20"          // optional
- *   }
+ * The client sends ONLY:
+ * - Customer information
+ * - Menu item IDs
+ * - Quantities
+ * - Optional promo code
  *
- * Responses:
- *   201 { ok:true, order_id, subtotal, discount, delivery_fee, total, status }
- *   400 { ok:false, errors:{...} | message }
- *   500 { ok:false, message }
+ * Prices are NEVER accepted from the browser.
+ * All prices are calculated from the database.
+ *
+ * Request JSON
+ *
+ * {
+ *   "customer":{
+ *      "name":"",
+ *      "email":"",
+ *      "phone":"",
+ *      "address":"",
+ *      "delivery_time":""
+ *   },
+ *
+ *   "items":[
+ *      {
+ *          "id":1,
+ *          "quantity":2
+ *      }
+ *   ],
+ *
+ *   "promo_code":"WELCOME10"
+ * }
  */
 
 require __DIR__ . '/helpers.php';
 require __DIR__ . '/db.php';
 
-const DELIVERY_FEE            = 300.00;   // standard delivery charge (KES)
-const FREE_DELIVERY_THRESHOLD = 3000.00;  // free delivery on orders above this
+/*==============================================================
+    DELIVERY SETTINGS
+==============================================================*/
+
+const DELIVERY_FEE = 200.00;
+
+const FREE_DELIVERY_THRESHOLD = 2500.00;
+
+/*==============================================================
+    ALLOW ONLY POST
+==============================================================*/
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    json_response(405, ['ok' => false, 'message' => 'Method not allowed. Use POST.']);
+
+    json_response(
+        405,
+        [
+            'ok' => false,
+            'message' => 'Method not allowed. Use POST.'
+        ]
+    );
+
 }
 
-$in       = read_input();
-$customer = is_array($in['customer'] ?? null) ? $in['customer'] : [];
-$items    = is_array($in['items'] ?? null) ? $in['items'] : [];
-$promoIn  = strtoupper(trim((string) ($in['promo_code'] ?? '')));
+/*==============================================================
+    READ REQUEST
+==============================================================*/
 
-// ─── Validate customer / delivery details ───
-$name    = trim((string) ($customer['name']          ?? ''));
-$email   = trim((string) ($customer['email']         ?? ''));
-$phone   = trim((string) ($customer['phone']         ?? ''));
-$address = trim((string) ($customer['address']       ?? ''));
-$time    = trim((string) ($customer['delivery_time'] ?? ''));
+$input = read_input();
+
+$customer = is_array($input['customer'] ?? null)
+    ? $input['customer']
+    : [];
+
+$items = is_array($input['items'] ?? null)
+    ? $input['items']
+    : [];
+
+$promoInput = strtoupper(
+    trim(
+        (string)($input['promo_code'] ?? '')
+    )
+);
+
+/*==============================================================
+    CUSTOMER DETAILS
+==============================================================*/
+
+$name = trim(
+    (string)($customer['name'] ?? '')
+);
+
+$email = trim(
+    (string)($customer['email'] ?? '')
+);
+
+$phone = trim(
+    (string)($customer['phone'] ?? '')
+);
+
+$address = trim(
+    (string)($customer['address'] ?? '')
+);
+
+$deliveryTime = trim(
+    (string)($customer['delivery_time'] ?? '')
+);
+
+/*==============================================================
+    VALIDATION
+==============================================================*/
 
 $errors = [];
-if (!valid_name($name))             $errors['name']    = 'Please enter a valid name.';
-if (!valid_email($email))           $errors['email']   = 'Please enter a valid email.';
-if (!valid_phone($phone))           $errors['phone']   = 'Please enter a valid phone number.';
-if (mb_strlen($address) < 6)        $errors['address'] = 'Please enter a delivery address.';
-if (!$items)                        $errors['items']   = 'Your cart is empty.';
+
+if (!valid_name($name)) {
+
+    $errors['name'] =
+        'Enter a valid customer name.';
+
+}
+
+if (!valid_email($email)) {
+
+    $errors['email'] =
+        'Enter a valid email address.';
+
+}
+
+if (!valid_phone($phone)) {
+
+    $errors['phone'] =
+        'Enter a valid phone number.';
+
+}
+
+if (strlen($address) < 6) {
+
+    $errors['address'] =
+        'Enter a delivery address.';
+
+}
+
+if (empty($items)) {
+
+    $errors['items'] =
+        'Your cart is empty.';
+
+}
 
 if ($errors) {
-    json_response(400, ['ok' => false, 'errors' => $errors]);
+
+    json_response(
+
+        400,
+
+        [
+
+            'ok' => false,
+
+            'errors' => $errors
+
+        ]
+
+    );
+
 }
 
-// ─── Normalise the requested quantities, keyed by product id ───
-$wanted = [];   // id => quantity
+/*==============================================================
+    NORMALIZE CART
+==============================================================*/
+
+$cart = [];
+
 foreach ($items as $item) {
-    $id  = (int) ($item['id'] ?? 0);
-    $qty = (int) ($item['quantity'] ?? 0);
-    if ($id <= 0 || $qty <= 0) {
+
+    $id = (int)($item['id'] ?? 0);
+
+    $quantity = (int)($item['quantity'] ?? 0);
+
+    if ($id <= 0 || $quantity <= 0) {
+
         continue;
+
     }
-    $qty = min($qty, 99);                       // sane upper bound
-    $wanted[$id] = ($wanted[$id] ?? 0) + $qty;  // merge duplicates
+
+    $quantity = min($quantity, 99);
+
+    $cart[$id] =
+        ($cart[$id] ?? 0) + $quantity;
+
 }
 
-if (!$wanted) {
-    json_response(400, ['ok' => false, 'message' => 'No valid items in the order.']);
+if (!$cart) {
+
+    json_response(
+
+        400,
+
+        [
+
+            'ok' => false,
+
+            'message' =>
+                'No valid menu items found.'
+
+        ]
+
+    );
+
 }
+
+/*==============================================================
+    LOAD MENU ITEMS
+==============================================================*/
 
 try {
+
     $pdo = db();
 
-    // Fetch the real price/name for every requested product in one query.
-    $ids          = array_keys($wanted);
-    $placeholders = implode(',', array_fill(0, count($ids), '?'));
-    $stmt = $pdo->prepare(
-        "SELECT id, name, price, availability FROM products WHERE id IN ($placeholders)"
+    $ids = array_keys($cart);
+
+    $placeholders = implode(
+        ',',
+        array_fill(
+            0,
+            count($ids),
+            '?'
+        )
     );
+
+    $stmt = $pdo->prepare(
+
+        "SELECT
+
+            id,
+
+            name,
+
+            price,
+
+            availability
+
+        FROM products
+
+        WHERE id IN ($placeholders)"
+
+    );
+
     $stmt->execute($ids);
+
     $products = [];
+
     foreach ($stmt->fetchAll() as $row) {
-        $products[(int) $row['id']] = $row;
+
+        $products[(int)$row['id']] = $row;
+
     }
 
-    // Every requested id must exist and be purchasable.
+    /*==========================================================
+        VERIFY MENU ITEMS
+    ==========================================================*/
+
     foreach ($ids as $id) {
+
         if (!isset($products[$id])) {
-            json_response(400, ['ok' => false, 'message' => "A product in your cart no longer exists (#$id)."]);
+
+            json_response(
+
+                400,
+
+                [
+
+                    'ok' => false,
+
+                    'message' =>
+                        "Menu item #{$id} no longer exists."
+
+                ]
+
+            );
+
         }
-        if ($products[$id]['availability'] === 'out_of_stock') {
-            json_response(409, ['ok' => false, 'message' => $products[$id]['name'] . ' is out of stock.']);
+
+        if (
+            $products[$id]['availability']
+            ===
+            'out_of_stock'
+        ) {
+
+            json_response(
+
+                409,
+
+                [
+
+                    'ok' => false,
+
+                    'message' =>
+                        $products[$id]['name'] .
+                        ' is currently unavailable.'
+
+                ]
+
+            );
+
         }
+
     }
 
-    // Build the line items and subtotal from DB prices.
-    $lines    = [];
-    $subtotal = 0.0;
-    foreach ($wanted as $id => $qty) {
-        $price     = (float) $products[$id]['price'];
-        $lineTotal = $price * $qty;
-        $subtotal += $lineTotal;
-        $lines[] = [
-            'product_id'   => $id,
-            'product_name' => $products[$id]['name'],
-            'unit_price'   => $price,
-            'quantity'     => $qty,
-            'line_total'   => $lineTotal,
+    /*==========================================================
+        BUILD ORDER
+    ==========================================================*/
+
+    $orderItems = [];
+
+    $subtotal = 0;
+
+    foreach ($cart as $id => $quantity) {
+
+        $price =
+            (float)$products[$id]['price'];
+
+        $lineTotal =
+            $price * $quantity;
+
+        $subtotal +=
+            $lineTotal;
+
+        $orderItems[] = [
+
+            'product_id' => $id,
+
+            'product_name' =>
+                $products[$id]['name'],
+
+            'unit_price' => $price,
+
+            'quantity' => $quantity,
+
+            'line_total' => $lineTotal
+
         ];
-    }
 
-    // ─── Apply a promo code (looked up + validated server-side) ───
-    $discount   = 0.0;
-    $promoCode  = null;
-    if ($promoIn !== '') {
-        $p = $pdo->prepare(
-            'SELECT code, discount_percent, min_order_amount
-             FROM promotions
-             WHERE code = ? AND is_active = 1
-               AND (starts_at IS NULL OR starts_at <= CURDATE())
-               AND (ends_at   IS NULL OR ends_at   >= CURDATE())'
+            /*==========================================================
+        APPLY PROMO CODE
+    ==========================================================*/
+
+    $discount = 0.00;
+
+    $promoCode = null;
+
+    if ($promoInput !== '') {
+
+        $promoStmt = $pdo->prepare(
+
+            "SELECT
+
+                code,
+                discount_percent,
+                min_order_amount
+
+            FROM promotions
+
+            WHERE code = ?
+
+            AND is_active = 1
+
+            AND (starts_at IS NULL OR starts_at <= CURDATE())
+
+            AND (ends_at IS NULL OR ends_at >= CURDATE())"
+
         );
-        $p->execute([$promoIn]);
-        $promo = $p->fetch();
+
+        $promoStmt->execute([$promoInput]);
+
+        $promo = $promoStmt->fetch();
 
         if (!$promo) {
-            json_response(400, ['ok' => false, 'errors' => ['promo_code' => 'That promo code is not valid.']]);
+
+            json_response(
+
+                400,
+
+                [
+
+                    'ok' => false,
+
+                    'errors' => [
+
+                        'promo_code' =>
+                            'Invalid promo code.'
+
+                    ]
+
+                ]
+
+            );
+
         }
-        if ($subtotal < (float) $promo['min_order_amount']) {
-            json_response(400, ['ok' => false, 'errors' => [
-                'promo_code' => 'Order must be at least KES ' . number_format((float) $promo['min_order_amount']) . ' to use this code.',
-            ]]);
+
+        if ($subtotal < (float)$promo['min_order_amount']) {
+
+            json_response(
+
+                400,
+
+                [
+
+                    'ok' => false,
+
+                    'errors' => [
+
+                        'promo_code' =>
+
+                        'Minimum order value is KES ' .
+
+                        number_format(
+
+                            (float)$promo['min_order_amount']
+
+                        )
+
+                    ]
+
+                ]
+
+            );
+
         }
-        $discount  = round($subtotal * ((float) $promo['discount_percent'] / 100), 2);
+
+        $discount = round(
+
+            $subtotal *
+
+            (
+
+                (float)$promo['discount_percent']
+
+                / 100
+
+            ),
+
+            2
+
+        );
+
         $promoCode = $promo['code'];
+
     }
 
-    // ─── Delivery fee (free above the threshold) ───
-    $deliveryFee = ($subtotal >= FREE_DELIVERY_THRESHOLD) ? 0.0 : DELIVERY_FEE;
-    $total       = $subtotal - $discount + $deliveryFee;
+    /*==========================================================
+        DELIVERY CHARGE
+    ==========================================================*/
 
-    // ─── Persist order + items atomically ───
+    if ($subtotal >= FREE_DELIVERY_THRESHOLD) {
+
+        $deliveryFee = 0.00;
+
+    } else {
+
+        $deliveryFee = DELIVERY_FEE;
+
+    }
+
+    $total =
+
+        $subtotal
+
+        - $discount
+
+        + $deliveryFee;
+
+    /*==========================================================
+        SAVE ORDER
+    ==========================================================*/
+
     $pdo->beginTransaction();
 
     $orderStmt = $pdo->prepare(
-        'INSERT INTO orders
-            (customer_name, customer_email, customer_phone, delivery_address,
-             delivery_time, promo_code, subtotal, discount, delivery_fee, total, status)
-         VALUES (:name, :email, :phone, :address, :time, :promo,
-                 :subtotal, :discount, :delivery, :total, :status)'
+
+        "INSERT INTO orders
+
+        (
+
+            customer_name,
+
+            customer_email,
+
+            customer_phone,
+
+            delivery_address,
+
+            delivery_time,
+
+            promo_code,
+
+            subtotal,
+
+            discount,
+
+            delivery_fee,
+
+            total,
+
+            status
+
+        )
+
+        VALUES
+
+        (
+
+            :name,
+
+            :email,
+
+            :phone,
+
+            :address,
+
+            :time,
+
+            :promo,
+
+            :subtotal,
+
+            :discount,
+
+            :delivery,
+
+            :total,
+
+            :status
+
+        )"
+
     );
+
     $orderStmt->execute([
-        ':name'     => $name,
-        ':email'    => $email,
-        ':phone'    => $phone,
-        ':address'  => $address,
-        ':time'     => $time !== '' ? $time : null,
-        ':promo'    => $promoCode,
+
+        ':name' => $name,
+
+        ':email' => $email,
+
+        ':phone' => $phone,
+
+        ':address' => $address,
+
+        ':time' =>
+
+            $deliveryTime !== ''
+
+            ? $deliveryTime
+
+            : null,
+
+        ':promo' => $promoCode,
+
         ':subtotal' => $subtotal,
+
         ':discount' => $discount,
+
         ':delivery' => $deliveryFee,
-        ':total'    => $total,
-        ':status'   => 'pending',
+
+        ':total' => $total,
+
+        ':status' => 'pending'
+
     ]);
 
-    $orderId = (int) $pdo->lastInsertId();
+    $orderId =
+
+        (int)$pdo->lastInsertId();
+
+    /*==========================================================
+        PREPARE ORDER ITEMS
+    ==========================================================*/
 
     $itemStmt = $pdo->prepare(
-        'INSERT INTO order_items
-            (order_id, product_id, product_name, unit_price, quantity, line_total)
-         VALUES (?, ?, ?, ?, ?, ?)'
+
+        "INSERT INTO order_items
+
+        (
+
+            order_id,
+
+            product_id,
+
+            product_name,
+
+            unit_price,
+
+            quantity,
+
+            line_total
+
+        )
+
+        VALUES
+
+        (
+
+            ?, ?, ?, ?, ?, ?
+
+        )"
+
     );
-    foreach ($lines as $line) {
+
+            /*==========================================================
+        SAVE ORDER ITEMS
+    ==========================================================*/
+
+    foreach ($orderItems as $item) {
+
         $itemStmt->execute([
+
             $orderId,
-            $line['product_id'],
-            $line['product_name'],
-            $line['unit_price'],
-            $line['quantity'],
-            $line['line_total'],
+
+            $item['product_id'],
+
+            $item['product_name'],
+
+            $item['unit_price'],
+
+            $item['quantity'],
+
+            $item['line_total']
+
         ]);
+
     }
+
+    /*==========================================================
+        COMMIT TRANSACTION
+    ==========================================================*/
 
     $pdo->commit();
-} catch (PDOException $e) {
-    if (isset($pdo) && $pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-    error_log('Order failed: ' . $e->getMessage());
-    json_response(500, ['ok' => false, 'message' => 'Could not place your order. Please try again.']);
+
 }
 
-json_response(201, [
-    'ok'           => true,
-    'order_id'     => $orderId,
-    'subtotal'     => $subtotal,
-    'discount'     => $discount,
-    'delivery_fee' => $deliveryFee,
-    'total'        => $total,
-    'status'       => 'pending',
-    'message'      => 'Order placed successfully.',
-]);
+/*==============================================================
+    DATABASE ERROR
+==============================================================*/
+
+catch (PDOException $e) {
+
+    if (isset($pdo) && $pdo->inTransaction()) {
+
+        $pdo->rollBack();
+
+    }
+
+    error_log(
+
+        'QuickBite Order Error: ' .
+
+        $e->getMessage()
+
+    );
+
+    json_response(
+
+        500,
+
+        [
+
+            'ok' => false,
+
+            'message' =>
+
+                'Unable to place your order. Please try again later.'
+
+        ]
+
+    );
+
+}
+
+/*==============================================================
+    SUCCESS RESPONSE
+==============================================================*/
+
+json_response(
+
+    201,
+
+    [
+
+        'ok' => true,
+
+        'message' =>
+
+            'Your order has been placed successfully!',
+
+        'order_id' => $orderId,
+
+        'subtotal' => $subtotal,
+
+        'discount' => $discount,
+
+        'delivery_fee' => $deliveryFee,
+
+        'total' => $total,
+
+        'status' => 'pending'
+
+    ]
+
+);
+
+    }
