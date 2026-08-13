@@ -31,7 +31,7 @@ $message    = trim((string) ($in['message']    ?? ''));
 // ─── Validate ───
 $errors = [];
 if (!valid_name($name))                 $errors['name']    = 'Please enter a valid name (letters only, at least 2 characters).';
-if (!valid_email($email))               $errors['email']   = 'Please enter a valid email (e.g. cleon@gmail.com).';
+if (!valid_email($email))               $errors['email']   = 'Please enter a valid email (e.g. arnold@gmail.com).';
 if ($phone !== '' && !valid_phone($phone)) $errors['phone'] = 'Please enter a valid phone number, or leave it blank.';
 if (mb_strlen($message) < 10)           $errors['message'] = 'Please enter a message of at least 10 characters.';
 
