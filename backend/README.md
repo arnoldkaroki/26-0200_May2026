@@ -53,7 +53,7 @@ The backend requires MySQL to be running.
 Import the database using the command line:
 
 ```bash
-/Applications/XAMPP/xamppfiles/bin/mysql -u root < sql/schema.sql
+ C:\xampp\mysql\bin\mysql.exe -u root quick_bite < sql/schema.sql
 ```
 
 or
@@ -67,7 +67,7 @@ http://localhost/phpmyadmin
 Create a database named
 
 ```text
-quickbite_delivery
+quick_bite
 ```
 
 Then import
@@ -83,7 +83,7 @@ sql/schema.sql
 Navigate to the project folder and start PHP's built-in server.
 
 ```bash
-cd ~/Documents/QuickBite/quickbite-delivery
+cd  ~/work/26-0200_May2026"
 /Applications/XAMPP/xamppfiles/bin/php -S localhost:8000
 ```
 

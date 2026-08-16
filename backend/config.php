@@ -11,7 +11,7 @@
 require_once __DIR__ . '/env.php';
 
 return [
-    'host'    => env_get('DB_HOST', '127.0.0.1'),
+    'host'    => env_get('DB_HOST', 'localhost'),
     'port'    => env_get('DB_PORT', '3306'),
     'name'    => env_get('DB_NAME', 'quick_bite'),
     'user'    => env_get('DB_USER', 'root'),

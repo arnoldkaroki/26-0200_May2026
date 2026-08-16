@@ -10,7 +10,7 @@
 --    mysql -u root -p < sql/seed.sql
 -- ===========================================================
 
-USE quickbite_delivery;
+USE quick_bite;
 
 -- ===========================================================
 -- Food Categories
