@@ -1,4 +1,4 @@
-# QuickBite Delivery — Backend (PHP + MySQL)
+# QuickBite Delivery — Backend (PHP + MySQL.)
 
 A lightweight PHP backend for the **QuickBite Delivery** food ordering website. It handles customer registration, menu management, food orders, contact messages, and the admin dashboard using a **MySQL** database. Built for a standard **XAMPP** installation.
 
