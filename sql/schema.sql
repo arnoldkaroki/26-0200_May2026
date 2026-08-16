@@ -15,11 +15,11 @@
 --    mysql -u root -p < sql/seed.sql
 -- ===========================================================
 
-CREATE DATABASE IF NOT EXISTS quickbite_delivery
+CREATE DATABASE IF NOT EXISTS quick_bite
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE quickbite_delivery;
+USE quick_bite;
 
 -- ===========================================================
 -- Registered Users
