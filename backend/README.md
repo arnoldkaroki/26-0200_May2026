@@ -67,7 +67,7 @@ http://localhost/phpmyadmin
 Create a database named
 
 ```text
-quickbite_delivery
+quick_bite
 ```
 
 Then import
